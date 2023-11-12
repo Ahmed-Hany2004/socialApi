@@ -20,7 +20,6 @@ router.get("/:id", async (req, res) => {
 
   new_user = await user.findOne({ "_id": new ObjectId(req.params.id) });
 
-
   const token = jwt.sign({ id: new_user._id, isAdmin: new_user.isAdmin }, process.env.secritkey);
   delete new_user.isAdmin
   delete new_user.pass
@@ -72,7 +71,7 @@ router.post("/register", upload.single("img"), async (req, res) => {
           "count_comment": null,
         })
 
-        new_user = await user.findOne({ "name": username });
+        new_user = await user.findOne({ "username": username });
 
         const token = jwt.sign({ id: new_user._id, isAdmin: new_user.isAdmin }, process.env.secritkey);
 
@@ -115,7 +114,7 @@ router.post("/register", upload.single("img"), async (req, res) => {
       "comments_count": 0,
     })
 
-    new_user = await user.findOne({ "usernameF": username });
+    new_user = await user.findOne({ "username": username });
 
     const token = jwt.sign({ id: new_user._id, isAdmin: new_user.isAdmin }, process.env.secritkey);
 

@@ -3,10 +3,7 @@ require("dotenv").config();
 
 url=process.env.url
 const dbname= process.env.db_name
-const client = new MongoClient(url, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const client = new MongoClient(url);
 
 const db = client.db(dbname);
 
