@@ -247,7 +247,7 @@ router.put("/data/:id", verifytokenx, async (req, res) => {
 
     if (unickname) {
 
-      if (unickname.name == myname.name) {
+      if (unickname.username == myname.username) {
         await user.updateOne({ "_id": new ObjectId(req.params.id) }, { $set: { "username": req.body.username, "bio": req.body.bio } })
 
         return res.status(200).json({ massege: "update Succeed" })
