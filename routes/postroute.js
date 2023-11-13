@@ -271,7 +271,7 @@ router.delete("/:id", async (req, res) => {
     }
 
 
-    await user.updateOne({ "_id": new ObjectId(x.author_id) }, { $inc: { "comments_count": -1 } })
+    await user.updateOne({ "_id": new ObjectId(x.author_id) }, { $inc: { "posts_count": -1 } })
 
     await post.deleteOne({ "_id": new ObjectId(req.params.id) })
 
