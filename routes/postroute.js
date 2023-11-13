@@ -263,7 +263,7 @@ router.delete("/:id", async (req, res) => {
   try {
     x = await post.findOne({ "_id": new ObjectId(req.params.id) })
 
-    if (x.author_id != req.user.id || req.user.isAdmin == true) {
+    if (x.author_id != req.user.id || req.user.isAdmin != true) {
       return res.status(403).json({ messege: "yor are not allaowed" })
     }
 
