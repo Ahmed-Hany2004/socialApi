@@ -263,20 +263,24 @@ router.delete("/:id", async (req, res) => {
   try {
     x = await post.findOne({ "_id": new ObjectId(req.params.id) })
 
-    if (x.author_id != req.user.id || req.user.isAdmin != true) {
-      return res.status(403).json({ messege: "yor are not allaowed" })
-    }
+    if(x.author_id == req.user.id || req.user.isAdmin == true){
 
-    if (x.image.publicid != null) {
+
+          if (x.image.publicid != null) {
       cloud_remove(x.image.publicid)
     }
 
 
-    await user.updateOne({ "_id": new ObjectId(author_id) }, { $inc: { "comments_count": -1 } })
+    await user.updateOne({ "_id": new ObjectId(x.author_id) }, { $inc: { "comments_count": -1 } })
 
     await post.deleteOne({ "_id": new ObjectId(req.params.id) })
 
-    res.status(200).json({ message: "post deleted" })
+   return res.status(200).json({ message: "post deleted" })
+    }
+
+    return res.status(403).json({ messege: "yor are not allaowed" })
+    
+    
 
   }
   catch (err) {
