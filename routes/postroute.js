@@ -186,7 +186,8 @@ router.put("/:id", upload.single("postimg"), async (req, res) => {
     if (x.author_id != req.user.id) {
       return res.status(403).json({ messege: "yor are not allaowed" })
     }
-
+   
+    const { error } = postSchema.validate(req.body);
     if (error) {
 
       if (error.details[0].message == "\"postimg\" is not allowed") {
