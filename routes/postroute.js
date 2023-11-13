@@ -305,7 +305,7 @@ router.post("/like/:id", async (req, res) => {
     return res.status(400).json({ messege: "you not login " })
   }
   try {
-    if (like) {
+    if (like == "true") {
 
       await post.updateOne({ "_id": new ObjectId(req.params.id) }, { $addToSet: { "like": req.user.id }, $inc: { "likecount": +1 } })
       res.status(200).json({ message: "complite" })
