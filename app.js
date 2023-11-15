@@ -4,6 +4,7 @@ const { main, db } = require("./connection");
 const bodyparser = require("body-parser");
 const { sddfg } = require("./token")
 const jwt = require("jsonwebtoken");
+var cors = require('cors')
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(morgan("dev"));
 app.use(bodyparser.urlencoded({ extended: true }))
 app.use(bodyparser.json())
 
+app.use(cors())
 
 //routes
 app.get("/", async (req, res) => {
