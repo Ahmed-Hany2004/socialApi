@@ -340,6 +340,9 @@ router.post("/:id/comments", async (req, res) => {
     return res.status(400).json({ message: "you not login " })
   }
 
+  if(comment.length==0){
+    return res.status(400).json({ message: "comment =null " })
+  }
   try {
 
     await comments.insertOne({
