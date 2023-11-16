@@ -169,7 +169,7 @@ router.post("/create", upload.single("postimg"), async (req, res) => {
 })
 
 
-router.put("/:id", upload.single("postimg"), async (req, res) => {
+router.put("/:id"+"%7D", upload.single("postimg"), async (req, res) => {
   const post = db.collection("post");
   const token = req.headers.token
   req.user = null;
