@@ -188,7 +188,8 @@ router.get("/:id/posts", async (req, res) => {
           as: "author"
         }
       },
-      { $project: { comments_id: 0, author_id: 0, "author.pass": 0, "author.isAdmin": 0, "author.cover": 0, "author.bio": 0 } }
+      { $project: { comments_id: 0, author_id: 0, "author.pass": 0, "author.isAdmin": 0, "author.cover": 0, "author.bio": 0 } },
+      { $sort : { created_at : -1 } }
       ,]).toArray()
     req.user = null;
     if (token) {
