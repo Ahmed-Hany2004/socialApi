@@ -11,8 +11,8 @@ const userschema = joi.object({
 
 const userupdateschema  = joi.object({
    username:joi.string().trim().min(3).max(20).required(),
-   bio:joi.string().trim().min(3).max(200),
-   email:joi.string().trim().min(3),
+   bio:joi.trim().min(3).max(200),
+   email:joi.trim().min(3),
 })
 
 
