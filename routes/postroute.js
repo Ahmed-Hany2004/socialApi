@@ -177,7 +177,7 @@ router.put("/:id", upload.single("postimg"), async (req, res) => {
   if (token) {
     data = jwt.verify(token, process.env.secritkey)
     req.user = data
-  } else {
+  } else {                        
     return res.status(400).json({ message: "you not login " })
   }
   try {

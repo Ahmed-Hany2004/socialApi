@@ -224,7 +224,7 @@ router.get("/:id/posts", async (req, res) => {
 });
 
 
-router.put("/data/:id", verifytokenx, async (req, res) => {
+router.post("/data/:id", verifytokenx, async (req, res) => {
 
 
   try {
