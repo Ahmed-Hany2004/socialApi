@@ -40,7 +40,7 @@ router.post("/register", upload.single("img"), async (req, res) => {
     x = await user.findOne({ "username": username });
     if (x) {
 
-      return res.status(400).json({ messege: "this user already registered" })
+      return res.status(400).json({ message: "this user already registered" })
     }
 
 
@@ -78,9 +78,9 @@ router.post("/register", upload.single("img"), async (req, res) => {
         delete new_user.isAdmin
         delete new_user.pass
 
-        return res.status(201).json({ data: "registered in Succeed", new_user, token })
+        return res.status(201).json({ message: "registered in Succeed", new_user, token })
       }
-      return res.status(400).json({ messege: error.details[0].message })
+      return res.status(400).json({ message: error.details[0].message })
 
 
     }
@@ -123,7 +123,7 @@ router.post("/register", upload.single("img"), async (req, res) => {
     delete new_user.isAdmin
     delete new_user.pass
 
-    return res.status(201).json({ data: "registered in Succeed", new_user, token })
+    return res.status(201).json({ message: "registered in Succeed", new_user, token })
 
 
   } catch (err) {
@@ -141,7 +141,7 @@ router.post("/login", async (req, res) => {
     const { error } = userschema.validate(req.body);
 
     if (error) {
-      return res.status(400).json({ messege: error.details[0].message })
+      return res.status(400).json({ message: error.details[0].message })
     }
     test = await user.findOne({ "username": req.body.username })
 
@@ -152,14 +152,14 @@ router.post("/login", async (req, res) => {
 
         delete test.isAdmin
         delete test.pass
-        res.status(200).json({ messege: "Sign in Succeed", test, token })
+        res.status(200).json({ message: "Sign in Succeed", test, token })
       }
       else {
-        res.status(400).json({ messege: "invalid user name or pass" })
+        res.status(400).json({ message: "invalid user name or pass" })
       }
     }
     else {
-      res.status(400).json({ messege: "invalid user name or pass" })
+      res.status(400).json({ message: "invalid user name or pass" })
     }
 
 
@@ -231,7 +231,7 @@ router.put("/data/:id", verifytokenx, async (req, res) => {
     newdata = req.body;
 
     if (req.user.id != req.params.id) {
-      return res.status(403).json({ messege: "yor are not allaowed" })
+      return res.status(403).json({ message: "yor are not allaowed" })
     }
 
 
@@ -239,7 +239,7 @@ router.put("/data/:id", verifytokenx, async (req, res) => {
 
     const { error } = userupdateschema.validate(req.body)
     if (error) {
-      return res.status(400).json({ messege: error.details[0].message })
+      return res.status(400).json({ message: error.details[0].message })
     }
 
     const unickname = await user.findOne({ "username": req.body.username })
@@ -251,16 +251,16 @@ router.put("/data/:id", verifytokenx, async (req, res) => {
       if (unickname.username == myname.username) {
         await user.updateOne({ "_id": new ObjectId(req.params.id) }, { $set: { "username": req.body.username, "bio": req.body.bio } })
 
-        return res.status(200).json({ messege: "update Succeed" })
+        return res.status(200).json({ message: "update Succeed" })
       }
       else {
-        return res.status(400).json({ messege: "this user already registered" })
+        return res.status(400).json({ message: "this user already registered" })
       }
 
     }
     await user.updateOne({ "_id": new ObjectId(req.params.id) }, { $set: { "username": req.body.username, "bio": req.body.bio } })
 
-    res.status(200).json({ messege: "update Succeed", })
+    res.status(200).json({ message: "update Succeed", })
   } catch (err) {
     console.log("=========>" + err);
     res.status(500).send("err")
@@ -290,7 +290,7 @@ router.post("/profileimg", upload.single("profileimg"), async (req, res) => {
 
 
     if (req.user.id != loginuser._id) {
-      return res.status(403).json({ messege: "yor are not allaowed" })
+      return res.status(403).json({ message: "yor are not allaowed" })
     }
 
     if (!req.file) {
@@ -300,7 +300,7 @@ router.post("/profileimg", upload.single("profileimg"), async (req, res) => {
 
     if (loginuser.profile_image.originalname == req.file.originalname) {
       fs.unlinkSync(pathimge)
-      return res.status(200).json({ messege: "upload img Succeed" })
+      return res.status(200).json({ message: "upload img Succeed" })
     }
 
 
@@ -323,7 +323,7 @@ router.post("/profileimg", upload.single("profileimg"), async (req, res) => {
       }
     })
 
-    res.status(200).json({ messege: "upload img Succeed" })
+    res.status(200).json({ message: "upload img Succeed" })
 
     fs.unlinkSync(pathimge)
 
@@ -354,7 +354,7 @@ router.post("/coverimg", upload.single("coverimg"), async (req, res) => {
 
 
     if (req.user.id != loginuser._id) {
-      return res.status(403).json({ messege: "yor are not allaowed" })
+      return res.status(403).json({ message: "yor are not allaowed" })
     }
 
     if (!req.file) {
@@ -389,7 +389,7 @@ router.post("/coverimg", upload.single("coverimg"), async (req, res) => {
       }
     })
 
-    res.status(200).json({ messege: "upload img Succeed" })
+    res.status(200).json({ message: "upload img Succeed" })
 
     fs.unlinkSync(pathimge)
 
@@ -412,11 +412,11 @@ router.delete("/", async (req, res) => {
     }
 
     if (req.user.isAdmin == false) {
-      return res.status(403).json({ messege: "yor are not allaowed" })
+      return res.status(403).json({ message: "yor are not allaowed" })
     }
 
     const user = db.collection('users')
-    res.status(200).json({ messege: "suiiiiiiiiiiiiiiiii" })
+    res.status(200).json({ message: "suiiiiiiiiiiiiiiiii" })
 
     await user.deleteMany({});
   } catch (err) {
@@ -440,7 +440,7 @@ router.delete("/profileimg", async (req, res) => {
     const loginuser = await user.findOne({ "_id": new ObjectId(req.user.id) })
 
     if (req.user.id != loginuser._id) {
-      return res.status(403).json({ messege: "yor are not allaowed" })
+      return res.status(403).json({ message: "yor are not allaowed" })
     }
 
 
@@ -482,7 +482,7 @@ router.delete("/coverimg", async (req, res) => {
     const loginuser = await user.findOne({ "_id": new ObjectId(req.user.id) })
 
     if (req.user.id != loginuser._id) {
-      return res.status(403).json({ messege: "yor are not allaowed" })
+      return res.status(403).json({ message: "yor are not allaowed" })
     }
 
 

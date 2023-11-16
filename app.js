@@ -49,8 +49,6 @@ app.get("/", async (req, res) => {
       if (token) {
          const data =  jwt.verify(token,process.env.secritkey)
          req.user= data.id;
-
-
       };
 
       for (let i = 0; i < x.length; i++) {

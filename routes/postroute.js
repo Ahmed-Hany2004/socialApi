@@ -104,7 +104,7 @@ router.post("/create", upload.single("postimg"), async (req, res) => {
     req.user = data;
 
   } else {
-    return res.status(400).json({ messege: "you not login " })
+    return res.status(400).json({ message: "you not login " })
   }
 
   try {
@@ -157,7 +157,7 @@ router.post("/create", upload.single("postimg"), async (req, res) => {
       likecount: 0,
       like: [],
     })
-    res.status(200).json({ messege: "post created Succeed" })
+    res.status(200).json({ message: "post created Succeed" })
     await user.updateOne({ "_id": new ObjectId(req.user.id) }, { $inc: { "posts_count": +1 } })
 
     fs.unlinkSync(postpath)
@@ -178,13 +178,13 @@ router.put("/:id", upload.single("postimg"), async (req, res) => {
     data = jwt.verify(token, process.env.secritkey)
     req.user = data
   } else {
-    return res.status(400).json({ messege: "you not login " })
+    return res.status(400).json({ message: "you not login " })
   }
   try {
     x = await post.findOne({ "_id": new ObjectId(req.params.id) })
 
     if (x.author_id != req.user.id) {
-      return res.status(403).json({ messege: "yor are not allaowed" })
+      return res.status(403).json({ message: "yor are not allaowed" })
     }
    
     const { error } = postSchema.validate(req.body);
@@ -204,7 +204,7 @@ router.put("/:id", upload.single("postimg"), async (req, res) => {
         return res.status(200).json({ message: "update Succeed" })
 
       }
-      return res.status(400).json({ messege: error.details[0].message })
+      return res.status(400).json({ message: error.details[0].message })
     }
     const pathimge = path.join(__dirname, "../upload/" + req.file.originalname)
 
@@ -278,7 +278,7 @@ router.delete("/:id", async (req, res) => {
    return res.status(200).json({ message: "post deleted" })
     }
 
-    return res.status(403).json({ messege: "yor are not allaowed" })
+    return res.status(403).json({ message: "yor are not allaowed" })
     
     
 
@@ -302,7 +302,7 @@ router.post("/like/:id", async (req, res) => {
     req.user = data
   }
   else {
-    return res.status(400).json({ messege: "you not login " })
+    return res.status(400).json({ message: "you not login " })
   }
   try {
     if (like == "true") {
@@ -337,7 +337,7 @@ router.post("/:id/comments", async (req, res) => {
     req.user = data
   }
   else {
-    return res.status(400).json({ messege: "you not login " })
+    return res.status(400).json({ message: "you not login " })
   }
 
   try {
