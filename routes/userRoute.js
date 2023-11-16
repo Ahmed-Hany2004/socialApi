@@ -40,7 +40,7 @@ router.post("/register", upload.single("img"), async (req, res) => {
     x = await user.findOne({ "username": username });
     if (x) {
 
-      return res.status(400).json({ massege: "this user already registered" })
+      return res.status(400).json({ messege: "this user already registered" })
     }
 
 
@@ -80,7 +80,7 @@ router.post("/register", upload.single("img"), async (req, res) => {
 
         return res.status(201).json({ data: "registered in Succeed", new_user, token })
       }
-      return res.status(400).json({ massege: error.details[0].message })
+      return res.status(400).json({ messege: error.details[0].message })
 
 
     }
@@ -152,10 +152,10 @@ router.post("/login", async (req, res) => {
 
         delete test.isAdmin
         delete test.pass
-        res.status(200).json({ massege: "Sign in Succeed", test, token })
+        res.status(200).json({ messege: "Sign in Succeed", test, token })
       }
       else {
-        res.status(400).json({ massege: "invalid user name or pass" })
+        res.status(400).json({ messege: "invalid user name or pass" })
       }
     }
     else {
@@ -239,7 +239,7 @@ router.put("/data/:id", verifytokenx, async (req, res) => {
 
     const { error } = userupdateschema.validate(req.body)
     if (error) {
-      return res.status(400).json({ massege: error.details[0].message })
+      return res.status(400).json({ messege: error.details[0].message })
     }
 
     const unickname = await user.findOne({ "username": req.body.username })
@@ -251,16 +251,16 @@ router.put("/data/:id", verifytokenx, async (req, res) => {
       if (unickname.username == myname.username) {
         await user.updateOne({ "_id": new ObjectId(req.params.id) }, { $set: { "username": req.body.username, "bio": req.body.bio } })
 
-        return res.status(200).json({ massege: "update Succeed" })
+        return res.status(200).json({ messege: "update Succeed" })
       }
       else {
-        return res.status(400).json({ massege: "this user already registered" })
+        return res.status(400).json({ messege: "this user already registered" })
       }
 
     }
     await user.updateOne({ "_id": new ObjectId(req.params.id) }, { $set: { "username": req.body.username, "bio": req.body.bio } })
 
-    res.status(200).json({ massege: "update Succeed", })
+    res.status(200).json({ messege: "update Succeed", })
   } catch (err) {
     console.log("=========>" + err);
     res.status(500).send("err")
@@ -300,7 +300,7 @@ router.post("/profileimg", upload.single("profileimg"), async (req, res) => {
 
     if (loginuser.profile_image.originalname == req.file.originalname) {
       fs.unlinkSync(pathimge)
-      return res.status(200).json({ massege: "upload img Succeed" })
+      return res.status(200).json({ messege: "upload img Succeed" })
     }
 
 
@@ -310,7 +310,7 @@ router.post("/profileimg", upload.single("profileimg"), async (req, res) => {
 
     if (loginuser.profile_image.image_publicid !== null) {
       cloud_remove(loginuser.profile_image.image_publicid)
-      return res.status(200).json({ massege: "upload img Succeed" })
+
     }
 
     await user.updateOne({ "_id": new ObjectId(req.user.id) }, {
@@ -323,7 +323,7 @@ router.post("/profileimg", upload.single("profileimg"), async (req, res) => {
       }
     })
 
-    res.status(200).json({ massege: "upload img Succeed" })
+    res.status(200).json({ messege: "upload img Succeed" })
 
     fs.unlinkSync(pathimge)
 
@@ -364,10 +364,10 @@ router.post("/coverimg", upload.single("coverimg"), async (req, res) => {
     const pathimge = path.join(__dirname, "../upload/" + req.file.originalname)
 
     if (loginuser.cover.originalname == req.file.originalname) {
-      res.status(200).json({ massege: "upload img Succeed" })
+      res.status(200).json({ messege: "upload img Succeed" })
        fs.unlinkSync(pathimge)
       
-       return
+       return  
     }
 
 
@@ -389,7 +389,7 @@ router.post("/coverimg", upload.single("coverimg"), async (req, res) => {
       }
     })
 
-    res.status(200).json({ massege: "upload img Succeed" })
+    res.status(200).json({ messege: "upload img Succeed" })
 
     fs.unlinkSync(pathimge)
 
@@ -416,7 +416,7 @@ router.delete("/", async (req, res) => {
     }
 
     const user = db.collection('users')
-    res.status(200).json({ massege: "suiiiiiiiiiiiiiiiii" })
+    res.status(200).json({ messege: "suiiiiiiiiiiiiiiiii" })
 
     await user.deleteMany({});
   } catch (err) {
