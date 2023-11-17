@@ -27,8 +27,9 @@ app.get("/", async (req, res) => {
 
 
 
-
+      
       x = await post.aggregate([
+         { $sort : { created_at : -1 } },
          { $skip: (page - 1) * limit },
          { $limit: Number(limit) },
          {
@@ -41,7 +42,7 @@ app.get("/", async (req, res) => {
             },
          },
          { $project: { comments_id: 0, author_id: 0, "author.pass": 0, "author.isAdmin": 0, "author.cover": 0, "author.bio": 0 } },
-         { $sort : { created_at : -1 } }
+         
 
       ]).toArray()
     
