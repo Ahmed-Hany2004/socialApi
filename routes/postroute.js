@@ -294,7 +294,7 @@ router.delete("/:id", async (req, res) => {
 router.post("/like/:id", async (req, res) => {
   const post = db.collection("post");
   const token = req.headers.token
-  const like = req.headers.like
+  const like = req.query.like
   req.user = null;
 
   if (token) {

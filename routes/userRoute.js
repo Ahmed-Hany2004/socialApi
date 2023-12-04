@@ -250,7 +250,7 @@ router.post("/data/:id", verifytokenx, async (req, res) => {
 
       if (unickname.username == myname.username) {
         await user.updateOne({ "_id": new ObjectId(req.params.id) }, { $set: { "username": req.body.username, "bio": req.body.bio } })
-
+        const new_user = await user.findOne({ "_id": new ObjectId(req.user.id) })
         res.status(200).json({ message: "update Succeed",new_user})
       }
       else {
