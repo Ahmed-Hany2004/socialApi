@@ -260,7 +260,9 @@ router.post("/data/:id", verifytokenx, async (req, res) => {
     }
     await user.updateOne({ "_id": new ObjectId(req.params.id) }, { $set: { "username": req.body.username, "bio": req.body.bio } })
 
-    res.status(200).json({ message: "update Succeed", })
+    const new_user = await user.findOne({ "_id": new ObjectId(req.user.id) })
+
+    res.status(200).json({ message: "update Succeed",new_user})
   } catch (err) {
     console.log("=========>" + err);
     res.status(500).send("err")
@@ -300,7 +302,8 @@ router.post("/profileimg", upload.single("profileimg"), async (req, res) => {
 
     if (loginuser.profile_image.originalname == req.file.originalname) {
       fs.unlinkSync(pathimge)
-      return res.status(200).json({ message: "upload img Succeed" })
+      const new_user = await user.findOne({ "_id": new ObjectId(req.user.id) })
+      return res.status(200).json({ message: "upload img Succeed", new_user })
     }
 
 
@@ -323,7 +326,9 @@ router.post("/profileimg", upload.single("profileimg"), async (req, res) => {
       }
     })
 
-    res.status(200).json({ message: "upload img Succeed" })
+    const new_user = await user.findOne({ "_id": new ObjectId(req.user.id) })
+
+    res.status(200).json({ message: "upload img Succeed",new_user })
 
     fs.unlinkSync(pathimge)
 

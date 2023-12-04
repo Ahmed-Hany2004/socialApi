@@ -73,7 +73,7 @@ app.get("/", async (req, res) => {
 
       
       
-      res.status(200).json({ data: x })
+      res.status(200).json({ data: x , page:page })
 
    } catch (err) {
       console.log("=========>" + err);
