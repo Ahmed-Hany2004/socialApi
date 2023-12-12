@@ -21,15 +21,17 @@ app.get("/", async (req, res) => {
 
    const post = db.collection("post")
    const page = req.query.page;
-   const limit = Number(req.query.limit) ;
+   const limit = Number(req.query.limit);
+
+  
    try {
 
 
+      z = await post.find({}).toArray()
 
 
-      
       x = await post.aggregate([
-         { $sort : { created_at : -1 } },
+         { $sort: { created_at: -1 } },
          { $skip: (page - 1) * limit },
          { $limit: Number(limit) },
          {
@@ -42,14 +44,14 @@ app.get("/", async (req, res) => {
             },
          },
          { $project: { comments_id: 0, author_id: 0, "author.pass": 0, "author.isAdmin": 0, "author.cover": 0, "author.bio": 0 } },
-         
+
 
       ]).toArray()
-    
+
       req.user = null;
       if (token) {
-         const data =  jwt.verify(token,process.env.secritkey)
-         req.user= data.id;
+         const data = jwt.verify(token, process.env.secritkey)
+         req.user = data.id;
       };
 
       for (let i = 0; i < x.length; i++) {
@@ -70,10 +72,10 @@ app.get("/", async (req, res) => {
 
 
 
+   page = z / Number(limit)
 
-      
-      
-      res.status(200).json({ data: x , page:page })
+   last_page = ceil(page)
+      res.status(200).json({ data: x, last_page})
 
    } catch (err) {
       console.log("=========>" + err);
