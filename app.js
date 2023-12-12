@@ -27,8 +27,7 @@ app.get("/", async (req, res) => {
    try {
 
 
-      z = await post.find({}).toArray()
-
+    z = await post.find({}).toArray()
 
       x = await post.aggregate([
          { $sort: { created_at: -1 } },
@@ -70,12 +69,13 @@ app.get("/", async (req, res) => {
          delete x[i].like
       }
 
+f = z.length;
 
+last_page =  Math.ceil(f/limit);
+ 
 
-   page = z.length / Number(limit)
-
-   last_page = ceil(page)
-      res.status(200).json({ data: x, last_page})
+   
+      res.status(200).json({ data: x,last_page})
 
    } catch (err) {
       console.log("=========>" + err);
