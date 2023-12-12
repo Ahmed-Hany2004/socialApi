@@ -72,7 +72,7 @@ app.get("/", async (req, res) => {
 
 
 
-   page = z / Number(limit)
+   page = z.length / Number(limit)
 
    last_page = ceil(page)
       res.status(200).json({ data: x, last_page})
